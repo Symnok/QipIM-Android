@@ -1,0 +1,29 @@
+{
+    "$schema": "https://jimm.online/store/manifest.schema.json",
+    "schema": 1,
+    "id": "qipim-android",
+    "name": "QipIM-Android",
+    "summary": "ICQ/OSCAR совместимый IM клиент",
+    "description": "ICQ/OSCAR совместимый клиент для Android 6+ с UI максимально близким к Qip2005.\n Код клиента написан с учетом системных требований Андроид 6-17. \n Реализованы все основные функции клиентов ICQ. \b Реализована поддержка нескольких OSCAR аккаунтов от разных серверов. \n",
+    "icon": "https://i.postimg.cc/grPPd9bM/qipim-512-white.png",
+    "screenshots": [
+        "https://i.postimg.cc/NjpZC2F6/Qip-IM.jpg"
+    ],
+    "category": "client",
+    "license": "freeware",
+    "developer": {
+        "name": "Symnok",
+        "url": "https://github.com/symnok"
+    },
+    "homepage": "https://github.com/symnok",
+    "platforms": [
+        {
+            "os": "android",
+            "min_version": "6",
+            "source": {
+                "type": "github",
+                "repo": "symnok/qipim-android"
+            } 
+        }
+    ]
+}
