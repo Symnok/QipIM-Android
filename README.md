@@ -1,99 +1,96 @@
-# QipIM для Android
+# QipIM for Android
 
-[English version](README.md)
+[Русская версия](README.ru.md)
 
-**QipIM for Android** — возрождённый **QIP Mobile**, ICQ-клиент для Android. Знакомый интерфейс QIP Mobile сохранён, а
-вместо старого закрытого сетевого ядра работает новое ядро протокола OSCAR, написанное заново на Java.
-Клиент подключается к современным OSCAR-серверам, которые продолжают работу ICQ: KICQ, MandarinIM, Nina.Chat,
-Logon.Chat, Jimm.Online, CrossTalk или любой другой OSCAR-сервер.
+**QipIM for Android** is a revived **QIP Mobile**, an ICQ client for Android. The familiar QIP Mobile interface is kept,
+but the old closed-source network core has been replaced by a new OSCAR protocol core written from scratch in Java.
+The client connects to the modern OSCAR servers that keep ICQ alive: KICQ, MandarinIM, Nina.Chat, Logon.Chat,
+Jimm.Online, CrossTalk, or any other OSCAR server.
 
-> Проект не связан с QIP и его владельцами. «QIP» — товарный знак своего владельца и упоминается только для того,
-> чтобы указать, откуда взят код. Приложение называется **QipIM** и устанавливается как `io.github.symnok.qipim`,
-> поэтому может стоять рядом с оригинальным QIP.
+> This project is not affiliated with QIP or its owners. "QIP" is a trademark of its owner and is mentioned only to
+> say where the code comes from. The app is called **QipIM** and installs as `io.github.symnok.qipim`, so it can sit
+> side by side with the original QIP.
 
-> QipIM для Android — брат [QipIM для Windows](https://github.com/Symnok/QipIM) (клиента в стиле QIP 2005, сетевое
-> ядро которого перенесено из этого приложения).
+> QipIM for Android is the sibling of [QipIM for Windows](https://github.com/Symnok/QipIM) (a QIP 2005-style client
+> whose network core was ported from this app).
 
-## Зачем был создан QipIM
+## Why QipIM was created
 
-QIP Mobile когда-то был одним из лучших ICQ-клиентов для телефонов, но давно не обновляется. На современных
-устройствах он либо не устанавливается, либо работает с ошибками, и в нём нет многого, что нужно сегодня.
-QipIM исправляет это.
+QIP Mobile was once one of the best ICQ clients for phones, but it has not been updated for a long time. On modern
+devices it either does not install or does not work properly, and it lacks much of what is needed today.
+QipIM fixes that.
 
-### Совместимость с Android 6 и новее
+### Android 6 and newer
 
-Оригинальный QIP Mobile создавался для старых версий Android. В QipIM переделан системный слой приложения:
-работа в фоне и поддержание соединения, уведомления, разрешения, сохранение профилей и открытых чатов.
-QipIM работает на **Android 6 и новее** (проверен на Android 10 и новее).
+The original QIP Mobile was made for old Android versions. QipIM reworks the app's system layer: running in the
+background and keeping the connection alive, notifications, permissions, and saving profiles and open chats.
+QipIM runs on **Android 6 and newer** (tested on Android 10 and newer).
 
-### Совместимость с 64-битными системами
+### 64-bit devices
 
-Сетевое ядро QIP Mobile было закрытой нативной библиотекой (`libqipcore.so`) только для 32-битных процессоров.
-Многие современные телефоны поддерживают только 64-битные приложения, и на них QIP Mobile не запускается.
-В QipIM эта библиотека полностью заменена новым ядром на Java, нативного кода в приложении нет. Поэтому один и тот
-же APK работает и на **32-битных, и на 64-битных** устройствах, включая те, где 32-битные приложения не поддерживаются
-совсем.
+QIP Mobile's network core was a closed native library (`libqipcore.so`) built only for 32-bit processors. Many modern
+phones run only 64-bit apps, and QIP Mobile does not start on them. In QipIM this library has been replaced entirely by
+the new Java core; there is no native code in the app. So the same APK works on **both 32-bit and 64-bit** devices,
+including those that do not support 32-bit apps at all.
 
-### Симметричное шифрование
+### Symmetric encryption
 
-Переписку с отдельным контактом можно зашифровать общей парольной фразой (**Passphrase Encryption**): в чате нажмите
-скрепку вверху → *Passphrase Encryption* и введите фразу, которую использует и ваш собеседник. Сервер видит только
-шифротекст.
+A conversation with a contact can be encrypted with a shared passphrase (**Passphrase Encryption**): in the chat, tap
+the paperclip at the top → *Passphrase Encryption* and enter the phrase your contact also uses. The server sees only
+ciphertext.
 
-- Ключ получается из парольной фразы с помощью **Argon2id** (64 МиБ, 3 прохода).
-- Каждое сообщение шифруется **ChaCha20-Poly1305** со случайным nonce и передаётся русскими буквами (Base32).
-- Схема совместима с **JasmineIM** (форк Symnok), **SimpleOKM** и **Komet**, а также с QipIM для Windows.
-- Зашифрованные сообщения отмечены 🔒.
+- The key is derived from the passphrase with **Argon2id** (64 MiB, 3 passes).
+- Each message is encrypted with **ChaCha20-Poly1305** with a random nonce and sent as Cyrillic letters (Base32).
+- The scheme is compatible with **JasmineIM** (Symnok's fork), **SimpleOKM** and **Komet**, and with QipIM for Windows.
+- Encrypted messages are marked with 🔒.
 
-Ограничения: нет прямой секретности (forward secrecy), парольная фраза хранится в личном хранилище приложения,
-метаданные (кто, когда, размер) серверу видны.
+Limitations: no forward secrecy, the passphrase is stored in the app's private storage, and metadata (who, when,
+size) is visible to the server.
 
-### Поддержка аватаров
+### Avatars
 
-Аватары загружаются стандартным для ICQ способом, как в QIP 2005 и QipIM для Windows: контакт сообщает идентификатор
-своей картинки, и если она изменилась, QipIM скачивает её через сервис аватаров сервера (SSBI). Показывается и ваш
-собственный аватар. Если контакт убрал аватар, он исчезает и в QipIM. HTTP-сервер аватаров (как в Jasmine IM)
-используется только как запасной вариант, когда у сервера нет сервиса аватаров.
+Avatars are loaded the standard ICQ way, as in QIP 2005 and QipIM for Windows: a contact announces the ID of their
+picture, and if it has changed, QipIM downloads it through the server's avatar service (SSBI). Your own avatar is shown
+as well. If a contact removes their avatar, it disappears in QipIM too. An HTTP avatar server (as in Jasmine IM) is used
+only as a fallback when the server has no avatar service.
 
-### Передача файлов
+### File transfer
 
-Файлы передаются по протоколу ICQ (OFT2) через прокси-сервер передачи файлов (ARS), так же как в Jasmine IM:
-в меню чата *Отправить файл* и *Передача файлов*, полученные файлы сохраняются в `Downloads/QipIM`. Для этого нужен
-сервер с таким прокси: в профиле **MandarinIM** он уже настроен (`ars.mandarin.im`), для других серверов его можно
-указать в настройках профиля.
+Files are transferred over the ICQ protocol (OFT2) through a file transfer proxy server (ARS), the same way as in
+Jasmine IM: *Send file* and *File transfers* in the chat menu; received files are saved to `Downloads/QipIM`. This
+needs a server with such a proxy: in the **MandarinIM** profile it is already set up (`ars.mandarin.im`); for other
+servers it can be entered in the profile settings.
 
-## Серверы
+## Servers
 
-При добавлении учётной записи выберите один из готовых профилей; адрес и настройки подставятся сами и их можно
-изменить в настройках сети профиля.
+When adding an account, choose one of the ready-made profiles; the address and settings are filled in automatically
+and can be changed in the profile's network settings.
 
-| Профиль | Сервер | Порт | SSL/TLS | Вход | Сервер передачи файлов (ARS) | Сервер аватаров (HTTP, запасной) |
+| Profile | Server | Port | SSL/TLS | Login | File transfer server (ARS) | Avatar server (HTTP, fallback) |
 |---|---|---|---|---|---|---|
-| KICQ | `kicq.ru` | 5190 | нет | MD5 | — | `http://217.147.15.238` |
-| MandarinIM | `oscar.mandarin.im` | 5190 | нет | MD5 | `ars.mandarin.im:5191` | `http://217.147.15.238` |
-| Nina.Chat | `login.oscar.nina.chat` | 5190 | нет | XOR | — | — |
-| Logon.Chat | `logon.chat` | 5190 | нет | XOR | — | — |
-| Jimm.Online | `icq.jimm.online` | 5193 | да | MD5 | — | — |
-| CrossTalk | `crosstalk.im` | 5190 | нет | MD5 | — | — |
-| Generic OSCAR | любой (укажите сами) | 5190 | по выбору | MD5 | по выбору | по выбору |
+| KICQ | `kicq.ru` | 5190 | no | MD5 | — | `http://217.147.15.238` |
+| MandarinIM | `oscar.mandarin.im` | 5190 | no | MD5 | `ars.mandarin.im:5191` | `http://217.147.15.238` |
+| Nina.Chat | `login.oscar.nina.chat` | 5190 | no | XOR | — | — |
+| Logon.Chat | `logon.chat` | 5190 | no | XOR | — | — |
+| Jimm.Online | `icq.jimm.online` | 5193 | yes | MD5 | — | — |
+| CrossTalk | `crosstalk.im` | 5190 | no | MD5 | — | — |
+| Generic OSCAR | any (enter it yourself) | 5190 | optional | MD5 | optional | optional |
 
-Аватары на всех серверах сначала загружаются через сервис аватаров самого OSCAR-сервера (SSBI); HTTP-сервер
-аватаров используется, только если такого сервиса нет. Тип входа XOR — старый способ, который требуют Nina.Chat и
-Logon.Chat.
+On all servers, avatars are first loaded through the OSCAR server's own avatar service (SSBI); the HTTP avatar server
+is used only if there is no such service. The XOR login type is the old method that Nina.Chat and Logon.Chat require.
 
-## Что ещё умеет QipIM для Android
+## What else QipIM for Android can do
 
-- **Несколько учётных записей** одновременно, в том числе один и тот же номер на разных серверах.
-- **Готовые профили серверов**: KICQ, MandarinIM, Nina.Chat, Logon.Chat, Jimm.Online, CrossTalk и «Generic OSCAR»
-  для любого другого сервера.
-- **SSL/TLS** для каждого профиля, с проверкой сертификата (Jimm.Online использует TLS по умолчанию).
-- **Икс-статусы**: картинка с заголовком и текстом, как в QIP; видны икс-статусы контактов.
-- **Emoji/Smiles** 
+- **Several accounts** at once, including the same number on different servers.
+- **Ready-made server profiles**: KICQ, MandarinIM, Nina.Chat, Logon.Chat, Jimm.Online, CrossTalk, and "Generic OSCAR"
+  for any other server.
+- **SSL/TLS** per profile, with certificate checking (Jimm.Online uses TLS by default).
+- **X-statuses**: a picture with a title and text, as in QIP; contacts' X-statuses are shown.
+- **Emoji/Smiles**
 - **Avatars**
-- **Резервная копия учётных записей** в файл и восстановление из него; с парольной фразой копия зашифрована и
-  содержит пароли.
-  
+- **Account backup** to a file and restore from it; with a passphrase the backup is encrypted and includes passwords.
 
 
-> QipIM разработан с помощью Claude, ИИ-ассистента компании Anthropic: разбор оригинального APK, новое ядро OSCAR
-> и доработки под современный Android сделаны вместе с Claude.
+
+> QipIM was developed with the help of Claude, Anthropic's AI assistant: the analysis of the original APK, the new
+> OSCAR core and the changes for modern Android were made together with Claude.
