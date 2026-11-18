@@ -4,7 +4,7 @@
     "id": "qipim-android",
     "name": "QipIM-Android",
     "summary": "ICQ/OSCAR совместимый IM клиент",
-    "description": "ICQ/OSCAR совместимый клиент для Android 6+ с UI максимально близким к Qip2005.\n Код клиента написан с учетом системных требований Андроид 6-17. \n Реализованы все основные функции клиентов ICQ. \b Реализована поддержка нескольких OSCAR аккаунтов от разных серверов. \n",
+    "description": "ICQ/OSCAR и Jabber/XMPP совместимый клиент для Android 6+ с UI максимально близким к Qip2005.\n Код клиента написан с учетом системных требований Андроид 6-17. \n Реализованы все основные функции клиентов ICQ. \b Реализована поддержка нескольких OSCAR аккаунтов от разных серверов. \n",
     "icon": "https://i.postimg.cc/grPPd9bM/qipim-512-white.png",
     "screenshots": [
         "https://i.postimg.cc/WpmvGgtj/qipim-android.jpg"
